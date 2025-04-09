@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Tag(name = "Employee API", description = "Operations related to employees")
@@ -61,7 +62,13 @@ public class EmployeeController {
         headers.set("Accept-Language", "en-US,en;q=0.9");
         headers.setCacheControl(CacheControl.noCache());
 
-        String daterange = LocalDate.now() + " - 2026-04-07";
+        DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate start = LocalDate.now();
+        LocalDate end = start.plusYears(1);
+
+        String startDate = start.format(d);
+        String endDate = end.format(d);
+        String daterange = startDate + " - " + endDate;
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("current_state", "NewStudents");
